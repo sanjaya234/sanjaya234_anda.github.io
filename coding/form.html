@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pembuatan Undangan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d47a1; /* Biru tua dominan */
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #1565c0; /* Biru sedang */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 10;
+            outline: none;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            background-color: #1e88e5; /* Biru cerah */
+            color: #ffffff;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #42a5f5; /* Biru muda */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-btn" onclick="goToResultPage()">&#9776;</button>
+    <div class="container">
+        <h1>Formulir Pembuatan Undangan/Poster</h1>
+        <form id="submissionForm">
+            <div class="form-group">
+                <label for="bidang">1. BIDANG</label>
+                <input type="text" id="bidang" name="bidang" required>
+            </div>
+            <div class="form-group">
+                <label for="namaAcara">2. NAMA ACARA</label>
+                <input type="text" id="namaAcara" name="namaAcara" required>
+            </div>
+            <div class="form-group">
+                <label for="tanggal">3. HARI/TANGGAL PELAKSANAAN</label>
+                <input type="text" id="tanggal" name="tanggal" required>
+            </div>
+            <div class="form-group">
+                <label for="elemen">4. ELEMEN YANG HARUS ADA</label>
+                <textarea id="elemen" name="elemen" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="desain">5. DESAIN APA SAJA YANG DI BUAT</label>
+                <input type="text" id="desain" name="desain" required>
+            </div>
+            <button type="submit">Kirim Formulir</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('submissionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Mengambil data dari formulir
+            const formData = {
+                bidang: document.getElementById('bidang').value,
+                namaAcara: document.getElementById('namaAcara').value,
+                tanggal: document.getElementById('tanggal').value,
+                elemen: document.getElementById('elemen').value,
+                desain: document.getElementById('desain').value,
+                timestamp: new Date().toLocaleString()
+            };
+
+            // Menyimpan data ke Local Storage
+            const submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            submissions.push(formData);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+
+            alert('Formulir berhasil dikirim!');
+            document.getElementById('submissionForm').reset();
+        });
+
+        function goToResultPage() {
+            const password = prompt("Masukkan kata sandi:");
+            const correctPassword = "medfokomkopastama";
+            
+            if (password === correctPassword) {
+                window.location.href = 'result.html';
+            } else {
+                alert("Kata sandi salah!");
+            }
+        }
+    </script>
+</body>
+</html>

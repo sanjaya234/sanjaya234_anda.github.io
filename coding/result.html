@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Formulir</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d47a1;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .submission {
+            background-color: #1565c0;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .submission p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        .submission p strong {
+            color: #e3f2fd;
+        }
+        .timestamp {
+            font-size: 0.9em;
+            color: #bbdefb;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Formulir yang Terkirim</h1>
+    <div id="results"></div>
+
+    <script>
+        window.onload = function() {
+            const resultsContainer = document.getElementById('results');
+            const submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+
+            if (submissions.length === 0) {
+                resultsContainer.innerHTML = '<p style="text-align: center;">Belum ada data yang dikirim.</p>';
+                return;
+            }
+
+            submissions.forEach(submission => {
+                const submissionDiv = document.createElement('div');
+                submissionDiv.classList.add('submission');
+
+                submissionDiv.innerHTML = `
+                    <p><strong>BIDANG:</strong> ${submission.bidang}</p>
+                    <p><strong>NAMA ACARA:</strong> ${submission.namaAcara}</p>
+                    <p><strong>HARI/TANGGAL PELAKSANAAN:</strong> ${submission.tanggal}</p>
+                    <p><strong>ELEMEN YANG HARUS ADA:</strong> ${submission.elemen.replace(/\n/g, '<br>')}</p>
+                    <p><strong>DESAIN APA SAJA YANG DI BUAT:</strong> ${submission.desain}</p>
+                    <p class="timestamp">Dikirim pada: ${submission.timestamp}</p>
+                `;
+                resultsContainer.appendChild(submissionDiv);
+            });
+        };
+    </script>
+</body>
+</html>
